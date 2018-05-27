@@ -4,10 +4,8 @@
         <meta charset="utf-8"/>
         <title>Up-Down</title>
 
-        <link rel="stylesheet" type="text/css" href="//cookiescriptcdn.pro/libs/cookieconsent.7.min.css" />
-        <a id="cookieconsent:learn_more" aria-label="learn more about cookies" role=button tabindex="0" class="cc-link" href="https://cookie-policy.org/" target="_blank">Learn more</a><script>var cookieconsent_ts = 1527447754597; var learnmore2 = document.getElementById("cookieconsent:learn_more");learnmore2.setAttribute("style", "display:none");</script>
-        <script src="//cookiescriptcdn.pro/libs/cookieconsent.7.min.js"></script>
-        
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>        
         <style>
             noscript {
                 font-size: 20px;
@@ -21,7 +19,7 @@
                 font-size: 75px;
             }
 
-            span {
+            #wrapper {
                 font-size: 50px;
             }
 
@@ -167,11 +165,13 @@
                 window.cookieconsent.initialise({
                     "palette": {
                         "popup": {
-                            "background": "#000"
+                            "background": "#efefef",
+                            "text": "#404040"
                         }
                     },
                     "button": {
-                        "background": "#f1d600"
+                        "background": "#8ec760",
+                        "text": "#ffffff"
                     }
                 });
             });
