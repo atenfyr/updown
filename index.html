@@ -41,10 +41,11 @@
             var upCount = -1;
             var downCount = 0;
             var score = 0;
+            var autoLoseTimer;
 
             var isDisabled = false;
 
-            document.onkeypress = function(e) {
+            document.onkeydown = function(e) {
                 if (isDisabled) {
                     return;
                 }
@@ -77,6 +78,11 @@
                         if (upCount === 2) {
                             downCount = 0;
                         }
+
+                        if (autoLoseTimer) {
+                            clearTimeout(autoLoseTimer);
+                        }
+                        autoLoseTimer = setTimeout(endGame, 500);
                         break;
                     case 40: // down arrow
                     case 83: // s
@@ -96,6 +102,12 @@
                             upCount = 0;
                             updateScore(++score);
                         }
+
+                        
+                        if (autoLoseTimer) {
+                            clearTimeout(autoLoseTimer);
+                        }
+                        autoLoseTimer = setTimeout(endGame, 500);
                         break;
                 }
             }
@@ -184,7 +196,7 @@
         </noscript>
         <div id='wrapper' style='display: none;'>
             <h1>Up-Down</h1>
-            <span id='instructions'>Repeat ↑↑↓↓ over and over!<br></span>
+            <span id='instructions'>Keep typing ↑↑↓↓, and don't pause!<br></span>
             <span id='lastmove' style='display: none;'></span>
             <span id='score'>Score: 0</span><br>
             <span id='highscore' style='display: none;'></span><br>
