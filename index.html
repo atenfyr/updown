@@ -148,7 +148,7 @@
                 if (!isDisabled) {
                     isDisabled = true;
                     if (score > getHighscore()) {
-                        setCookie('highscore', score, 365);
+                        setCookie('highscore', score, 9999);
                         document.getElementById('highscore').innerHTML = 'New high score!';
                     } else {
                         document.getElementById('highscore').innerHTML = 'High score: ' + getHighscore();
