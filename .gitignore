@@ -1,0 +1,4 @@
+/assets/scripts/*.js
+!/assets/scripts/*.min.js
+/assets/styles/*.css
+!/assets/styles/*.min.css
