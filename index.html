@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: 'unsafe-inline'">
         <meta name="robots" content="index, nofollow">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: 'unsafe-inline'">
         <title>Up-Down</title>
 
-        <link rel="stylesheet" href="assets/styles/updown.min.css" />
-        <link rel="stylesheet" href="assets/styles/cookieconsent.min.css" />
+        <link rel="stylesheet" href="assets/styles/cookieconsent.min.css">
+        <link rel="stylesheet" href="assets/styles/updown.min.css">
         <script src="assets/scripts/cookieconsent.min.js"></script>
         <script src="assets/scripts/updown.min.js"></script>
     </head>
@@ -16,13 +16,13 @@
             To play this game, please enable JavaScript.
             Here are some <a href="https://www.enable-javascript.com/" target="_blank">instructions</a> on how to enable JavaScript in your web browser.
         </noscript>
-        <div id='wrapper' style='display: none;'>
+        <div id='wrapper'>
             <h1>Up-Down</h1>
             <span id='instructions'>Keep typing ↑↑↓↓, and don't pause!<br></span>
             <span id='lastmove' style='display: none;'></span>
             <span id='score'>Score: 0</span><br>
-            <span id='highscore' style='display: none;'></span><br>
-            <span id='refresh' style='display: none;'><a onclick='window.location.reload();' href='#'>Try again?</a></span>
+            <span id='highscore' style='display: none;'></span>
+            <span id='refresh' style='display: none;'><a onclick='resetGame();' href='#'>Try again?</a></span>
         </div>
     </body>
 </html>
