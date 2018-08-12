@@ -1,0 +1,19 @@
+{
+	"name": "updown",
+	"version": "0.1.0",
+	"description": "A browser game where you have to repeat ↑↑↓↓ over and over.",
+	"author": "Atenfyr",
+    "license": "MIT",
+    "scripts": {
+        "make": "babel --minified --compact true --no-comments assets/scripts/src --out-file assets/scripts/updown.min.js"
+    },
+	"dependencies": {},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-minify": "^0.4.3"
+    },
+    "babel": {
+        "presets": ["env", "minify"]
+    }
+}
