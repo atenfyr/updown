@@ -12,17 +12,19 @@
         <script src="assets/scripts/updown.min.js"></script>
     </head>
     <body>
-        <noscript>
-            To play this game, please enable JavaScript.
-            Here are some <a href="https://www.enable-javascript.com/" target="_blank">instructions</a> on how to enable JavaScript in your web browser.
-        </noscript>
         <div id='wrapper'>
-            <h1>Up-Down</h1>
-            <span id='instructions'>Keep typing ↑↑↓↓, and don't pause!<br></span>
-            <span id='lastmove' style='display: none;'></span>
-            <span id='score'>Score: 0</span><br>
-            <span id='highscore' style='display: none;'></span>
-            <span id='refresh' style='display: none;'><a onclick='resetGame();' href='#'>Try again?</a></span>
+            <noscript><div style='font-size:20pt;text-align:center;font-family:Arial,Helvetica,sans-serif'>
+                To play this game, please enable JavaScript.
+                Here are some <a href="https://www.enable-javascript.com/" target="_blank">instructions</a> on how to enable JavaScript in your web browser.
+            </div></noscript>
+            <div id='wrapper2' style='display: none;'>
+                <h1>Up-Down</h1>
+                <span id='instructions'>Keep typing ↑↑↓↓, and don't pause!<br></span>
+                <span id='lastmove' style='display: none;'></span>
+                <span id='score'>Score: 0</span><br>
+                <span id='highscore' style='display: none;'></span>
+                <span id='refresh' style='display: none;'><a onclick='resetGame();' href='#'>Try again?</a></span>
+            </div>
         </div>
     </body>
 </html>
