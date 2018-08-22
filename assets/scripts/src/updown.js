@@ -67,9 +67,9 @@ let handleKey = function(e) {
 
     if (!e || !kc) return;
     if (document.getElementById('refresh').style.display !== 'none') {
-        if (validDisabledKeys.indexOf(kc) === -1) return
-    } else {
-        if (validKeys.indexOf(kc) === -1) return
+        if (validDisabledKeys.indexOf(kc) === -1) return;
+    } else if (!isDisabled) {
+        if (validKeys.indexOf(kc) === -1) return;
     }
     if (block[0] === 3) {
         block = [];
