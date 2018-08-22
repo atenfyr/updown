@@ -58,11 +58,19 @@ let resetGame = function() {
     isDisabled = false;
 }
 
+let validKeys = [38,40,87,83];
+let validDisabledKeys = [13];
+
 let handleKey = function(e) {
     e = e || window.event;
+    let kc = e.keyCode || e.which;
 
-    if (isDisabled || !e || !e.keyCode) return;
-    if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 87 && e.keyCode !== 83) return;
+    if (!e || !kc) return;
+    if (document.getElementById('refresh').style.display !== 'none') {
+        if (validDisabledKeys.indexOf(kc) === -1) return
+    } else {
+        if (validKeys.indexOf(kc) === -1) return
+    }
     if (block[0] === 3) {
         block = [];
         document.getElementById('instructions').style.display = 'none';
@@ -70,7 +78,7 @@ let handleKey = function(e) {
         updateScore(0);
     }
     
-    switch(e.keyCode) {
+    switch(kc) {
         case 38: // up arrow
         case 87: // w
             if (document.getElementById('lastmove').innerHTML.length >= 20) {
@@ -90,6 +98,12 @@ let handleKey = function(e) {
             }
 
             block.push(1);
+            break;
+        case 13: // enter
+            if (isDisabled) {
+                resetGame();
+                return;
+            }
             break;
     }
 
