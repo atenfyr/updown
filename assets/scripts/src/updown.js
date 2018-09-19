@@ -1,7 +1,6 @@
 'use strict';
 
-let score = 0, isDisabled = false, block = [3], autoLoseTimer, appearTimer, xDown, yDown;
-let timer = 300;
+let score = 0, timer = 300, isDisabled = false, block = [3], autoLoseTimer, appearTimer, xDown, yDown;
 
 let isMobile = function() {
     let c = false;
@@ -10,9 +9,8 @@ let isMobile = function() {
 }
 if (isMobile()) timer = 600;
 
-let hasElementOverflowed = function() {
-    let e = document.getElementById('lastmove');
-    return e.scrollWidth > e.offsetWidth;
+let hasOverflowed = function() {
+    return document.getElementById('lastmove').offsetWidth >= Math.max(document.documentElement.clientWidth, window.innerWidth || 0)*0.75
 }
 
 let updateScore = function(val) {
@@ -88,7 +86,7 @@ let handleKey = function(e) {
     switch(kc) {
         case 38: // up arrow
         case 87: // w
-            if (document.getElementById('lastmove').innerHTML.length >= 20 || hasElementOverflowed()) {
+            if (document.getElementById('lastmove').innerHTML.length % 4 === 0 && document.getElementById('lastmove').innerHTML.length >= 20 || hasOverflowed()) {
                 document.getElementById('lastmove').innerHTML = '↑';
             } else {
                 document.getElementById('lastmove').innerHTML += '↑';
@@ -98,12 +96,7 @@ let handleKey = function(e) {
             break;
         case 40: // down arrow
         case 83: // s
-            if (document.getElementById('lastmove').innerHTML.length >= 20 || hasElementOverflowed()) {
-                document.getElementById('lastmove').innerHTML = '↓';
-            } else {
-                document.getElementById('lastmove').innerHTML += '↓';
-            }
-
+            document.getElementById('lastmove').innerHTML += '↓';
             block.push(1);
             break;
         case 13: // enter
@@ -141,8 +134,12 @@ window.addEventListener("load", function() {
     });
     
     document.addEventListener('touchstart', function(e) {
-        xDown = e.touches[0].clientX;
-        yDown = e.touches[0].clientY;
+        if (isDisabled) {
+            handleKey({'keyCode':13});
+        } else {
+            xDown = e.touches[0].clientX;
+            yDown = e.touches[0].clientY;
+        }
     }, false);
     
     document.addEventListener('touchmove', function(e) {
