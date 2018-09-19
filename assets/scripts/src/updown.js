@@ -10,6 +10,11 @@ let isMobile = function() {
 }
 if (isMobile()) timer = 600;
 
+let hasElementOverflowed = function() {
+    let e = document.getElementById('lastmove');
+    return e.scrollWidth > e.offsetWidth;
+}
+
 let updateScore = function(val) {
     if (!isDisabled) document.getElementById('score').innerHTML = '<br>Score: ' + val;
 }
@@ -83,7 +88,7 @@ let handleKey = function(e) {
     switch(kc) {
         case 38: // up arrow
         case 87: // w
-            if (document.getElementById('lastmove').innerHTML.length >= 20) {
+            if (document.getElementById('lastmove').innerHTML.length >= 20 || hasElementOverflowed()) {
                 document.getElementById('lastmove').innerHTML = '↑';
             } else {
                 document.getElementById('lastmove').innerHTML += '↑';
@@ -93,7 +98,7 @@ let handleKey = function(e) {
             break;
         case 40: // down arrow
         case 83: // s
-            if (document.getElementById('lastmove').innerHTML.length >= 20) {
+            if (document.getElementById('lastmove').innerHTML.length >= 20 || hasElementOverflowed()) {
                 document.getElementById('lastmove').innerHTML = '↓';
             } else {
                 document.getElementById('lastmove').innerHTML += '↓';
