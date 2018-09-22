@@ -41,6 +41,7 @@ let endGame = function() {
 
         appearTimer = setTimeout(() => {
             document.getElementById('highscore').style.display = '';
+            document.body.setAttribute("id", "");
             appearTimer = setTimeout(() => {
                 document.getElementById('refresh').style.display = '';
             }, 800);
@@ -49,7 +50,8 @@ let endGame = function() {
 }
 
 let resetGame = function() {
-    score = 0, block = [3], isDisabled = true;
+    document.body.setAttribute("id", "unselectable");
+    score = 0, block = [3], isDisabled = true, xDown = null, yDown = null;
     if (autoLoseTimer) clearTimeout(autoLoseTimer);
     autoLoseTimer = void 0;
     if (appearTimer) clearTimeout(appearTimer);
@@ -72,6 +74,8 @@ let validDisabledKeys = [13];
 let handleKey = function(e) {
     e = e || window.event;
     let kc = e.keyCode || e.which;
+
+    document.body.setAttribute("id", "unselectable");
 
     if (!e || !kc) return;
     if (document.getElementById('refresh').style.display !== 'none') {
@@ -119,6 +123,32 @@ let handleKey = function(e) {
     if (block.length >= 4) { block = []; updateScore(++score); };
 }
 
+let touchstart = function(e) {
+    let touches = e.touches?e.touches[0]:e;
+
+    if (isDisabled && isMobile()) {
+        handleKey({'keyCode':13});
+    } else {
+        xDown = touches.clientX;
+        yDown = touches.clientY;
+    }
+}
+
+let touchmove = function(e) {
+    if (!xDown || !yDown) return;
+    let touches = e.touches?e.touches[0]:e;
+
+    if (Math.abs(xDown-touches.clientX) < Math.abs(yDown-touches.clientY)) {
+        if (yDown-touches.clientY > 0) {
+            handleKey({'keyCode':38});
+        } else { 
+            handleKey({'keyCode':40});
+        }
+    }
+
+    xDown = null, yDown = null;
+}
+
 window.addEventListener("load", function() {
     document.getElementById('wrapper2').style.display = '';
 
@@ -138,28 +168,11 @@ window.addEventListener("load", function() {
         }
     });
     
-    document.addEventListener('touchstart', function(e) {
-        if (isDisabled) {
-            handleKey({'keyCode':13});
-        } else {
-            xDown = e.touches[0].clientX;
-            yDown = e.touches[0].clientY;
-        }
-    }, false);
-    
-    document.addEventListener('touchmove', function(e) {
-        if (!xDown || !yDown) return;
+    document.addEventListener('touchstart', touchstart, false);
+    document.addEventListener('touchmove', touchmove, false);
+    document.addEventListener('mousedown', touchstart, false);
+    document.addEventListener('mousemove', touchmove, false);
 
-        if (Math.abs(xDown-e.touches[0].clientX) < Math.abs(yDown-e.touches[0].clientY)) {
-            if (yDown-e.touches[0].clientY > 0) {
-                handleKey({'keyCode':38});
-            } else { 
-                handleKey({'keyCode':40});
-            }
-        }
-
-        xDown = null, yDown = null;
-    }, false);
 
     document.addEventListener("keydown", handleKey);
 });
