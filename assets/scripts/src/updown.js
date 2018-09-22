@@ -121,6 +121,7 @@ let handleKey = function(e) {
 
 let touchstart = function(e) {
     let touches = e.touches?e.touches[0]:e;
+    timer = 600;
 
     if (isDisabled) {
         handleKey({'keyCode':13});
@@ -166,6 +167,8 @@ window.addEventListener("load", function() {
     
     document.addEventListener('touchstart', touchstart, false);
     document.addEventListener('touchmove', touchmove, false);
-
-    document.addEventListener("keydown", handleKey);
+    document.addEventListener("keydown", function(e) {
+        timer = 300;
+        return handleKey(e);
+    });
 });
