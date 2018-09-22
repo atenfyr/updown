@@ -41,7 +41,6 @@ let endGame = function() {
 
         appearTimer = setTimeout(() => {
             document.getElementById('highscore').style.display = '';
-            document.body.setAttribute("id", "");
             appearTimer = setTimeout(() => {
                 document.getElementById('refresh').style.display = '';
             }, 800);
@@ -50,7 +49,6 @@ let endGame = function() {
 }
 
 let resetGame = function() {
-    document.body.setAttribute("id", "unselectable");
     score = 0, block = [3], isDisabled = true, xDown = null, yDown = null;
     if (autoLoseTimer) clearTimeout(autoLoseTimer);
     autoLoseTimer = void 0;
@@ -74,8 +72,6 @@ let validDisabledKeys = [13];
 let handleKey = function(e) {
     e = e || window.event;
     let kc = e.keyCode || e.which;
-
-    document.body.setAttribute("id", "unselectable");
 
     if (!e || !kc) return;
     if (document.getElementById('refresh').style.display !== 'none') {
@@ -126,7 +122,7 @@ let handleKey = function(e) {
 let touchstart = function(e) {
     let touches = e.touches?e.touches[0]:e;
 
-    if (isDisabled && isMobile()) {
+    if (isDisabled) {
         handleKey({'keyCode':13});
     } else {
         xDown = touches.clientX;
@@ -170,9 +166,6 @@ window.addEventListener("load", function() {
     
     document.addEventListener('touchstart', touchstart, false);
     document.addEventListener('touchmove', touchmove, false);
-    document.addEventListener('mousedown', touchstart, false);
-    document.addEventListener('mousemove', touchmove, false);
-
 
     document.addEventListener("keydown", handleKey);
 });
