@@ -1,6 +1,6 @@
 'use strict';
 
-let score = 0, timer = 300, isDisabled = false, block = [3], autoLoseTimer, appearTimer, xDown, yDown;
+let score = 0, timer = 300, isDisabled = false, block = [3], keys = [], autoLoseTimer, appearTimer, xDown, yDown;
 
 let isMobile = function() {
     let c = false;
@@ -119,33 +119,6 @@ let handleKey = function(e) {
     if (block.length >= 4) { block = []; updateScore(++score); };
 }
 
-let touchstart = function(e) {
-    let touches = e.touches?e.touches[0]:e;
-    timer = 600;
-
-    if (isDisabled) {
-        handleKey({'keyCode':13});
-    } else {
-        xDown = touches.clientX;
-        yDown = touches.clientY;
-    }
-}
-
-let touchmove = function(e) {
-    if (!xDown || !yDown) return;
-    let touches = e.touches?e.touches[0]:e;
-
-    if (Math.abs(xDown-touches.clientX) < Math.abs(yDown-touches.clientY)) {
-        if (yDown-touches.clientY > 0) {
-            handleKey({'keyCode':38});
-        } else { 
-            handleKey({'keyCode':40});
-        }
-    }
-
-    xDown = null, yDown = null;
-}
-
 window.addEventListener("load", function() {
     document.getElementById('wrapper2').style.display = '';
 
@@ -165,8 +138,65 @@ window.addEventListener("load", function() {
         }
     });
     
-    document.addEventListener('touchstart', touchstart, false);
-    document.addEventListener('touchmove', touchmove, false);
+    if (window.navigator.msPointerEnabled) {
+        keys["touchstart"] = "MSPointerDown";
+        keys["touchmove"] = "MSPointerMove";
+        keys["touchend"] = "MSPointerUp";
+    } else {
+        keys["touchstart"] = "touchstart";
+        keys["touchmove"] = "touchmove";
+        keys["touchend"] = "touchend";
+    }
+
+    document.addEventListener(keys["touchstart"], function(e) {
+        timer = 600;
+        if ((!window.navigator.msPointerEnabled && event.touches.length > 1) || event.targetTouches.length > 1) return;
+    
+        if (isDisabled) {
+            handleKey({'keyCode':13});
+        } else {
+            if (window.navigator.msPointerEnabled) {
+                xDown = event.pageX;
+                yDown = event.pageY;
+            } else {
+                xDown = e.touches[0].clientX;
+                yDown = e.touches[0].clientY;
+            }
+        }
+        e.preventDefault();
+    });
+
+    document.addEventListener(keys["touchmove"], function(e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener(keys["touchend"], function(e) {
+        if ((!window.navigator.msPointerEnabled && event.touches.length > 1) || event.targetTouches.length > 1) return;
+        if (!xDown || !yDown) return;
+
+        let xEnd, yEnd;
+        if (window.navigator.msPointerEnabled) {
+            xEnd = e.pageX;
+            yEnd = e.pageY;
+        } else {
+            xEnd = e.changedTouches[0].clientX;
+            yEnd = e.changedTouches[0].clientY;
+        }
+
+        let distanceX = Math.abs(xEnd - xDown);
+        let distanceY = Math.abs(yEnd - yDown);
+    
+        if (Math.max(distanceX, distanceY) > 10 && distanceX < distanceY) {
+            // (right : left) : (down : up)
+            // self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+            if ((yEnd - yDown) > 0) {
+                handleKey({'keyCode':40});
+            } else {
+                handleKey({'keyCode':38});
+            }
+        }
+    });
+    
     document.addEventListener("keydown", function(e) {
         timer = 300;
         return handleKey(e);
