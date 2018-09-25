@@ -150,14 +150,14 @@ window.addEventListener("load", function() {
 
     document.addEventListener(keys["touchstart"], function(e) {
         timer = 600;
-        if ((!window.navigator.msPointerEnabled && event.touches.length > 1) || event.targetTouches.length > 1) return;
+        if ((!window.navigator.msPointerEnabled && e.touches.length > 1) || e.targetTouches.length > 1) return;
     
         if (isDisabled) {
             handleKey({'keyCode':13});
         } else {
             if (window.navigator.msPointerEnabled) {
-                xDown = event.pageX;
-                yDown = event.pageY;
+                xDown = e.pageX;
+                yDown = e.pageY;
             } else {
                 xDown = e.touches[0].clientX;
                 yDown = e.touches[0].clientY;
@@ -171,7 +171,7 @@ window.addEventListener("load", function() {
     });
 
     document.addEventListener(keys["touchend"], function(e) {
-        if ((!window.navigator.msPointerEnabled && event.touches.length > 1) || event.targetTouches.length > 1) return;
+        if ((!window.navigator.msPointerEnabled && e.touches.length > 1) || e.targetTouches.length > 1) return;
         if (!xDown || !yDown) return;
 
         let xEnd, yEnd;
