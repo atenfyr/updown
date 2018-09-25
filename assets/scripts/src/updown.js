@@ -187,8 +187,6 @@ window.addEventListener("load", function() {
         let distanceY = Math.abs(yEnd - yDown);
     
         if (Math.max(distanceX, distanceY) > 10 && distanceX < distanceY) {
-            // (right : left) : (down : up)
-            // self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
             if ((yEnd - yDown) > 0) {
                 handleKey({'keyCode':40});
             } else {
